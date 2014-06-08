@@ -4,8 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    crypto = require('crypto');
+    Schema = mongoose.Schema;
  
 /**
   * Validations
@@ -24,116 +23,96 @@ var CategorySchema = new Schema({
         type: String,
         required: true,
     },
-    email: {
+    status: {
         type: String,
-        required: true,
-        match: [/.+\@.+\..+/, 'Please enter a valid email'],
+        default: '1'
     },
-    Categoryname: {
+    create_time: {
         type: String,
-        unique: true,
-        required: true
-    },
-    roles: {
-        type: Array,
-        default: ['authenticated']
-    },
-    hashed_password: {
-        type: String,
-        validate: [validatePresenceOf, 'Password cannot be blank']
-    },
-    provider: {
-        type: String,
-        default: 'local'
-    },
-    salt: String,
-    facebook: {},
-    twitter: {},
-    github: {},
-    google: {},
-    linkedin: {}
+        default: new Date()+''
+    }
 });
 
 /**
  * Virtuals
  */
-CategorySchema.virtual('password').set(function(password) {
+/*CategorySchema.virtual('password').set(function(password) {
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.hashPassword(password);
 }).get(function() {
     return this._password;
-});
+});*/
 
 /**
  * Pre-save hook
  */
-CategorySchema.pre('save', function(next) {
+/*CategorySchema.pre('save', function(next) {
     if (this.isNew && this.provider === 'local' && this.password && !this.password.length)
         return next(new Error('Invalid password'));
     next();
 });
-
+*/
 /**
  * Methods
  */
-CategorySchema.methods = {
+// CategorySchema.methods = {
 
-    /**
-     * HasRole - check if the Category has required role
-     *
-     * @param {String} plainText
-     * @return {Boolean}
-     * @api public
-     */
-    hasRole: function(role) {
-        var roles = this.roles;
-        return roles.indexOf('admin') !== -1 || roles.indexOf(role) !== -1;
-    },
+//     /**
+//      * HasRole - check if the Category has required role
+//      *
+//      * @param {String} plainText
+//      * @return {Boolean}
+//      * @api public
+//      */
+//     hasRole: function(role) {
+//         var roles = this.roles;
+//         return roles.indexOf('admin') !== -1 || roles.indexOf(role) !== -1;
+//     },
 
-    /**
-     * IsAdmin - check if the Category is an administrator
-     *
-     * @return {Boolean}
-     * @api public
-     */
-    isAdmin: function() {
-        return this.roles.indexOf('admin') !== -1;
-    },
+//     /**
+//      * IsAdmin - check if the Category is an administrator
+//      *
+//      * @return {Boolean}
+//      * @api public
+//      */
+//     isAdmin: function() {
+//         return this.roles.indexOf('admin') !== -1;
+//     },
 
-    /**
-     * Authenticate - check if the passwords are the same
-     *
-     * @param {String} plainText
-     * @return {Boolean}
-     * @api public
-     */
-    authenticate: function(plainText) {
-        return this.hashPassword(plainText) === this.hashed_password;
-    },
+//     *
+//      * Authenticate - check if the passwords are the same
+//      *
+//      * @param {String} plainText
+//      * @return {Boolean}
+//      * @api public
+     
+//     authenticate: function(plainText) {
+//         return this.hashPassword(plainText) === this.hashed_password;
+//     },
 
-    /**
-     * Make salt
-     *
-     * @return {String}
-     * @api public
-     */
-    makeSalt: function() {
-        return crypto.randomBytes(16).toString('base64');
-    },
+//     /**
+//      * Make salt
+//      *
+//      * @return {String}
+//      * @api public
+//      */
+//     makeSalt: function() {
+//         return crypto.randomBytes(16).toString('base64');
+//     },
 
-    /**
-     * Hash password
-     *
-     * @param {String} password
-     * @return {String}
-     * @api public
-     */
-    hashPassword: function(password) {
-        if (!password || !this.salt) return '';
-        var salt = new Buffer(this.salt, 'base64');
-        return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
-    }
-};
+//     /**
+//      * Hash password
+//      *
+//      * @param {String} password
+//      * @return {String}
+//      * @api public
+//      */
+//     hashPassword: function(password) {
+//         if (!password || !this.salt) return '';
+//         var salt = new Buffer(this.salt, 'base64');
+//         return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+//     }
+// };
 
 mongoose.model('Category', CategorySchema);
