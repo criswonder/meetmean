@@ -1,0 +1,46 @@
+<div class="row" data-ng-controller="ItemInputControl">
+    <form  class="form-horizontal" ng-submit="create_item()" style="padding-top:100px">
+         
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="name">名称：</label>
+            <div class="col-md-8">
+                <input id="name" class="form-control" type="text" name="name" placeholder="Full Name" ng-model="item.name" />
+            </div>
+        </div>
+        <div class="form-group" id="article_block">
+            <label class="col-md-2 control-label" for="name">分类：</label>
+            <div class="col-md-8">
+                
+                <select class="form-control" ng-model="item.parent" >
+                    <option value="">-- 请选择 --</option>
+                    {% if result %}
+                        {% for res in result %}
+                            <option value="{{res}}">{{res.name}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+             </div>
+        </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label" for="name">图片URLS：</label>
+            <div class="col-md-8">
+                <textarea id="name" class="form-control" ng-model="item.urls" >
+                 </textarea>    
+                 <span class="help-block">请用英文逗号进行分隔</span>
+            </div>
+        </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="name">备注：</label>
+            <div class="col-md-8">
+                <textarea id="name" class="form-control" ng-model="item.des" >
+                 </textarea>  
+            </div>
+        </div>
+     
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <button class="btn btn-primary" type="submit">创建</button>
+            </div>
+        </div>
+    </form>
+</div>

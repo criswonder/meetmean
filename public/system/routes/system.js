@@ -14,7 +14,12 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                 })
                 .state('auth', {
                     templateUrl: 'public/auth/views/index.html'
+                })
+                .state('create_item',{
+                    url: '/create_item',
+                    templateUrl: 'public/system/views/item_input.html'
                 });
+                
         }
     ])
     .config(['$locationProvider',

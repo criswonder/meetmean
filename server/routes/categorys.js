@@ -14,6 +14,6 @@ module.exports = function(app, passport) {
     app.route('/category/create').post(category.create);
 
     app.route('/category/list').get(category.list);
-
+    app.route('/category/list').post(category.create_ablum_item);
 
 };
