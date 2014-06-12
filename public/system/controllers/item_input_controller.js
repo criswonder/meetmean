@@ -15,26 +15,34 @@ angular.module('ablum_module', [])
                     category_id: $scope.item.parent
                 })
                     .success(function(response) {
+                        console.log('success!!!!!!');
                         alert('success');
+                        
                         // // authentication OK
                         // $scope.loginError = 0;
                         // $rootScope.user = response.user;
                         // $rootScope.$emit('loggedin');
-                        // if (response.redirect) {
-                        //     if (window.location.href === response.redirect) {
-                        //         //This is so an admin user will get full admin page
-                        //         window.location.reload();
-                        //     } else {
-                        //         window.location = response.redirect;
-                        //     }
-                        // } else {
-                        //     $location.url('/');
-                        // }
+                        if (response.redirect) {
+                            if (window.location.href === response.redirect) {
+                                //This is so an admin user will get full admin page
+                                window.location.reload();
+                            } else {
+                                window.location = response.redirect;
+                            }
+                        } else {
+                            $location.url('/');
+                        }
                     })
                     .error(function() {
                         $scope.loginerror = 'Authentication failed.';
                         alert('create_item failed');
                     });
             };
+            $http.get('/category/list').success(function(data) {
+                 $scope.categorys = data.result;
+            });
+
+            // $scope.orderProp = 'age';
+
         }
     ]);

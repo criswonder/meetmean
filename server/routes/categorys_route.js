@@ -1,7 +1,7 @@
 'use strict';
 
 // User routes use category controller
-var category = require('../controllers/category');
+var category = require('../controllers/category_controller');
 
 module.exports = function(app, passport) {
  

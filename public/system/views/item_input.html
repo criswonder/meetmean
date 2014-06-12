@@ -12,12 +12,15 @@
             <div class="col-md-8">
                 
                 <select class="form-control" ng-model="item.parent" >
-                    <option value="">-- 请选择 --</option>
+                  <!--   <option value="">-- 请选择 --</option>
                     {% if result %}
                         {% for res in result %}
                             <option value="{{res}}">{{res.name}}</option>
                         {% endfor %}
-                    {% endif %}
+                    {% endif %} -->
+                    <option ng-repeat="cat in categorys" value="{{cat._id}}">
+                        {{cat.name}}
+                     </option>
                 </select>
              </div>
         </div>
