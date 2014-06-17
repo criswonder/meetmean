@@ -46,10 +46,10 @@ angular.module('ablum_module', [])
     ])
     .controller('ItemListControl', ['$scope', '$rootScope', '$http', '$location',
         function($scope, $rootScope, $http, $location) {
-            $scope.items = {};
+            $scope.albums = {};
             $scope.viewDetailPage = function() {};
-            $http.get('/items').success(function(data) {
-                 $scope.items = data.result;
+            $http.get('/albums').success(function(data) {
+                 $scope.albums = data.result;
             });
 
         }

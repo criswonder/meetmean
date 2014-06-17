@@ -15,7 +15,7 @@
       <!--Body content-->
 
       <ul class="albums">
-        <li ng-repeat="album in items | filter:query | orderBy:orderProp"
+        <li ng-repeat="album in albums | filter:query | orderBy:orderProp"
             class="thumbnail album-listing">
           <a href="#/albums/{{album.id}}" class="thumb"><img ng-src="{{album.imageUrl}}"></a>
           <a href="#/albums/{{album.id}}">{{album.name}}</a>

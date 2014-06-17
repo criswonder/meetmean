@@ -19,7 +19,7 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                     url: '/create_item',
                     templateUrl: 'public/system/views/item_input.html'
                 }).state('item_list',{
-                    url: '/item_list',
+                    url: '/albums',
                     templateUrl: 'public/system/views/item_list.html',
                     controller: 'ItemListControl'
                 });
