@@ -1,7 +1,8 @@
 'use strict';
 
 // User routes use category controller
-var category = require('../controllers/category_controller');
+var category = require('../controllers/category_ctrl');
+var items_ctrl = require('../controllers/items_ctrl');
 
 module.exports = function(app, passport) {
  
@@ -15,5 +16,7 @@ module.exports = function(app, passport) {
 
     app.route('/category/list').get(category.list);
     app.route('/category/list').post(category.create_ablum_item);
+
+    app.route('/items').get(items_ctrl.list);
 
 };
