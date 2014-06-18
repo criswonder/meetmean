@@ -5,6 +5,10 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
             // For unmatched routes:
             $urlRouterProvider.otherwise('/');
+            // $urlRouterProvider.when('/albums/:albumId',{
+            //     templateUrl: 'public/auth/views/index.html',
+            //     controller: 'AlbumViewControl'
+            // }).otherwise('/');
 
             // states for my app
             $stateProvider              
@@ -18,11 +22,28 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                 .state('create_item',{
                     url: '/create_item',
                     templateUrl: 'public/system/views/item_input.html'
-                }).state('item_list',{
+                })
+                .state('albums',{
                     url: '/albums',
                     templateUrl: 'public/system/views/item_list.html',
                     controller: 'ItemListControl'
+                })
+                 .state('detail',{
+                    url: '/albums/:albumId',
+                    // templateUrl: 'public/system/views/item_list.html',
+                    templateUrl: 'public/auth/views/index.html',
+                    controller: 'AlbumViewControl'
                 });
+
+            // $urlRouterProvider.
+            //   when('/albums/:albumId', {
+            //     templateUrl: 'partials/phone-detail.html',
+            //     controller: 'PhoneDetailCtrl'
+            //   }).
+            //   otherwise({
+            //     redirectTo: '/'
+            //   });
+      
                 
         }
     ])

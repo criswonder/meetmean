@@ -17,8 +17,10 @@
       <ul class="albums">
         <li ng-repeat="album in albums | filter:query | orderBy:orderProp"
             class="thumbnail album-listing">
-          <a href="#/albums/{{album.id}}" class="thumb"><img ng-src="{{album.imageUrl}}"></a>
-          <a href="#/albums/{{album.id}}">{{album.name}}</a>
+
+          <a href="/albums/6" ui-sref='view_album' class="thumb" ><img ng-src="{{album.imageUrl}}"></a>
+          <a ui-sref='detail({ albumId: album._id})'>{{album.name}} </a>
+           <!-- <a href="/albums/8" >{{album.name}}</a> -->
           <p>{{album.des}}</p>
         </li>
       </ul>
@@ -26,5 +28,5 @@
     </div>
   </div>
 </div>
-<script>
+<script
 </script>

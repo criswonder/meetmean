@@ -49,10 +49,10 @@ exports.list = function(req, res) {
             console.log('category list have error');
            return res.status(400); 
         } 
-        console.log(results);
-        for(var i=0;i<results.length;i++){
-            console.log(results[i]);
-        }
+        // console.log(results);
+        // for(var i=0;i<results.length;i++){
+        //     console.log(results[i]);
+        // }
         res.status(200);
         res.send({
             result:results

@@ -47,10 +47,18 @@ angular.module('ablum_module', [])
     .controller('ItemListControl', ['$scope', '$rootScope', '$http', '$location',
         function($scope, $rootScope, $http, $location) {
             $scope.albums = {};
+            console.log('ItemListControl-->');
             $scope.viewDetailPage = function() {};
             $http.get('/albums').success(function(data) {
                  $scope.albums = data.result;
             });
 
+        }
+    ])
+    .controller('AlbumViewControl', ['$stateParams','$scope',
+        function($stateParams,$scope) {
+            // $stateParams.albumId = $scope.album._id;
+            alert($stateParams.albumId);
+            console.log('AlbumViewControl-->'+$stateParams.albumId);
         }
     ]);
