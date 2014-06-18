@@ -30,8 +30,7 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                 })
                  .state('detail',{
                     url: '/albums/:albumId',
-                    // templateUrl: 'public/system/views/item_list.html',
-                    templateUrl: 'public/auth/views/index.html',
+                    templateUrl: 'public/system/views/album.html',
                     controller: 'AlbumViewControl'
                 });
 

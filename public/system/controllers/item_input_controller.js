@@ -55,10 +55,27 @@ angular.module('ablum_module', [])
 
         }
     ])
-    .controller('AlbumViewControl', ['$stateParams','$scope',
-        function($stateParams,$scope) {
+    .controller('AlbumViewControl', ['$stateParams','$scope','$http',
+        function($stateParams,$scope, $http) {
             // $stateParams.albumId = $scope.album._id;
-            alert($stateParams.albumId);
-            console.log('AlbumViewControl-->'+$stateParams.albumId);
+            // alert($stateParams.albumId);
+            $scope.album = {};
+            var id = $stateParams.albumId;
+            console.log('/albums/'+id);
+            $http.get('/albums/'+id,{itemId: id}).success(function(data) {
+                 // $scope.albums = data.result;
+                 console.log('AlbumViewControl-->'+data.result);
+                 var album = data.result[0];
+                 var imageUrls = album.urls.split(',');
+                 for( var index in imageUrls){
+                    console.log(imageUrls[index]);
+
+                 }
+                 album.imageUrls = imageUrls;
+                 console.log(album);
+                 $scope.album = album;
+            });
+            // console.log('AlbumViewControl-->'+$stateParams.albumId);
+            // console.log('AlbumViewControl-->'+$stateParams.fuck);
         }
     ]);
