@@ -4,35 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Category = mongoose.model('Category'),
+    // Category = mongoose.model('Category'),
     AblumItem = mongoose.model('AblumItem');
 
  
-/**
- * Create Category
- */
-exports.create = function(req, res, next) {
-    var category = new Category(req.body);
- 
-    console.log('xxxxxxxxxxxxxxxxxxxx-----------3333-------------xxxxxxxxxxxxxxxxxxxx');
-    console.log(category);
-    category.save(function(err) {
-        if (err) {
-            switch (err.code) {
-                case 11000:
-                case 11001:
-                    res.status(400).send('Categoryname already taken');
-                    break;
-                default:
-                    res.status(400).send('Please fill all the required fields');
-            }
-
-            return res.status(400);
-        }
-        res.render('categorys/create');
-        res.status(200);
-    });
-};
 
 exports.render = function(req, res) {
     console.log('xxxxxxxxxxxxxxxxxxxx-----------222-------------xxxxxxxxxxxxxxxxxxxx');
@@ -41,7 +16,9 @@ exports.render = function(req, res) {
     });
 };
 
-
+/*
+查询所有album
+*/
 exports.list = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
     AblumItem.find().exec( function(error, results){
@@ -61,6 +38,9 @@ exports.list = function(req, res) {
     });
     
 };
+/**
+显示单个album 使用
+**/
 exports.get = function(req, res) {
     var id = req.params.ablumId;
     console.log(id);

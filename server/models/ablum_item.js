@@ -30,6 +30,10 @@ var CategorySchema = new Schema({
     des: {
         type: String
     },
+    price: {
+        type: Number,
+        default:0
+    },
     category_id: {
         type: String,
         required: true,

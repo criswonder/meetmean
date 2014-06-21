@@ -11,6 +11,7 @@ angular.module('ablum_module', [])
                 $http.post('/category/list', {
                     name: $scope.item.name,
                     des: $scope.item.des,
+                    price: $scope.item.price,
                     urls: $scope.item.urls,
                     category_id: $scope.item.parent
                 })
