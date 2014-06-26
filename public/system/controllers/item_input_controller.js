@@ -1,11 +1,44 @@
 'use strict';
 
 angular.module('ablum_module', [])
-    .controller('ItemInputControl', ['$scope', '$rootScope', '$http', '$location',
-        function($scope, $rootScope, $http, $location) {
+    .controller('ItemInputControl', ['$stateParams','$scope', '$rootScope', '$http', '$location',
+        function($stateParams,$scope, $rootScope, $http, $location) {
             // This object will be filled by the form
-            $scope.item = {};
+            
+            if($stateParams.albumId){
+               $http.get('/albums/'+$stateParams.albumId,{itemId: $stateParams.albumId}).success(function(data) {
+                 // $scope.albums = data.result;
+                 console.log('ItemInputControl update-->'+data.result);
+                 var album = data.result[0];
+                 var imageUrls = album.urls.split(',');
+                 for( var index in imageUrls){
+                    console.log(imageUrls[index]);
 
+                 }
+                 album.imageUrls = imageUrls;
+                 console.log(album);
+                 $scope.item = album;
+
+                 $http.get('/category/list').success(function(data) {
+                     $scope.categorys = data.result;
+                     for(var i in $scope.categorys){
+                        if($scope.item.category_id===$scope.categorys[i]._id)
+                        {
+                            $scope.cat_index = i; 
+                            break;
+                        }
+                     }
+                });
+            }); 
+            }else{
+                $scope.item = {};
+                $http.get('/category/list').success(function(data) {
+                     $scope.categorys = data.result;
+                });
+
+            }
+            console.log($stateParams.albumId);
+            console.log($stateParams.abc);
             // Register the login() function
             $scope.create_item = function() {
                 $http.post('/category/list', {
@@ -13,7 +46,7 @@ angular.module('ablum_module', [])
                     des: $scope.item.des,
                     price: $scope.item.price,
                     urls: $scope.item.urls,
-                    category_id: $scope.item.parent
+                    category_id: $scope.item.category_id
                 })
                     .success(function(response) {
                         console.log('success!!!!!!');
@@ -39,19 +72,29 @@ angular.module('ablum_module', [])
                         alert('create_item failed');
                     });
             };
-            $http.get('/category/list').success(function(data) {
-                 $scope.categorys = data.result;
-            });
-
         }
     ])
-    .controller('ItemListControl', ['$scope', '$rootScope', '$http', '$location',
-        function($scope, $rootScope, $http, $location) {
+    .controller('ItemListControl', ['$state','$scope', '$rootScope', '$http', '$location',
+        function($state, $scope, $rootScope, $http, $location) {
             $scope.albums = {};
             console.log('ItemListControl-->');
             $scope.viewDetailPage = function() {};
+
+            $scope.editAlbum = function(album){
+                console.log('editAlbum get called');
+                $state.go('create_item',{albumId:album._id},{obj: album});
+            };
+
             $http.get('/albums').success(function(data) {
                  $scope.albums = data.result;
+                 
+                 var item;
+                 for( var index in $scope.albums){
+                    item = $scope.albums[index];
+                    console.log(item);
+                    var imageUrls = item.urls.split(',');
+                    item.imageUrl = imageUrls[0];
+                 }
             });
 
         }

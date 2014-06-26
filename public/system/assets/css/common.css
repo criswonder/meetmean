@@ -46,3 +46,23 @@ footer p {
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+.thumb {
+  float: left;
+  height: 100px !important;
+  width: 100px;
+
+}
+.thumb > img{
+    height: 100px;
+}
+.thumbnail{
+    line-height:3.3 !important;
+    margin-right:10px !important;
+}
+.thumbnail > img{
+    margin-right:10px !important;
+}
+.leftbtn{
+    float:right;
+}
+

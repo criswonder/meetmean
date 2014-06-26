@@ -20,7 +20,7 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: 'public/auth/views/index.html'
                 })
                 .state('create_item',{
-                    url: '/create_item',
+                    url: '/create_item/:albumId',
                     templateUrl: 'public/system/views/item_input.html'
                 })
                 .state('albums',{
