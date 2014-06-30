@@ -20,6 +20,7 @@ module.exports = function(app, passport) {
     // AngularJS route to check for authentication
     app.route('/loggedin')
         .get(function(req, res) {
+            console.log('server---> route loggedin!!');
             res.send(req.isAuthenticated() ? req.user : '0');
         });
 

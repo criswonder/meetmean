@@ -7,7 +7,7 @@ angular.module('mean.auth').config(['$stateProvider',
         var checkLoggedOut = function($q, $timeout, $http, $location) {
             // Initialize a new promise
             var deferred = $q.defer();
-
+            console.log('-----> checkLoggedOut');
             // Make an AJAX call to check if the user is logged in
             $http.get('/loggedin').success(function(user) {
                 // Authenticated
@@ -28,7 +28,7 @@ angular.module('mean.auth').config(['$stateProvider',
             .state('auth.login', {
                 url: '/login',
                 templateUrl: 'public/auth/views/login.html',
-                resolve: {
+                rsesolve: {
                     loggedin: checkLoggedOut
                 }
             })

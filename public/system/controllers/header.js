@@ -2,6 +2,7 @@
 
 angular.module('mean.system').controller('HeaderController', ['$scope', '$rootScope', 'Global', 'Menus',
     function($scope, $rootScope, Global, Menus) {
+        console.log('client -->HeaderController');
         $scope.global = Global;
         $scope.menus = {};
 
@@ -17,7 +18,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
             }, function(menu) {
                 $scope.menus[name] = menu;
             });
-        }
+        }   
 
         // Query server for menus and check permissions
         queryMenu('main', defaultMainMenu);
