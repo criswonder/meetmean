@@ -28,10 +28,14 @@ module.exports = function(app, passport) {
         .post(passport.authenticate('local', {
             failureFlash: true
         }), function(req, res) {
+            var varRedirect = (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false;
+            console.log(varRedirect);
             res.send({
                 user: req.user,
-                redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+                redirect: varRedirect
             });
+            
+            
         });
 
     // Setting the facebook oauth routes

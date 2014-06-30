@@ -21,11 +21,15 @@ angular.module('mean.controllers.login', [])
                             if (window.location.href === response.redirect) {
                                 //This is so an admin user will get full admin page
                                 window.location.reload();
+                                console.log('window.location.href === response.redirect');
                             } else {
                                 window.location = response.redirect;
+                                console.log('window.location.href != response.redirect');
                             }
                         } else {
+                            console.log('response.redirect false');
                             $location.url('/');
+                            // window.location.reload();
                         }
                     })
                     .error(function() {
