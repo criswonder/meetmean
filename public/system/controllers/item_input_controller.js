@@ -90,6 +90,18 @@ angular.module('ablum_module', [])
                 console.log($rootScope.user);
                 console.log($scope.user);
                 
+                $http.post('/albums/fav',{user_id:$scope.user._id,ablum_id:album._id})
+                    .success(function(response) {
+                        if(response.fav_result){
+                            alert('fav success');
+                        }else{
+                             alert('fav failed!!!');
+                        }
+                    })
+                    .error(function() {
+                       
+                        alert('create_item failed');
+                    });
             };
 
 

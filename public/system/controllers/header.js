@@ -26,7 +26,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
         $scope.isCollapsed = false;
 
         $rootScope.$on('loggedin', function() {
-
+            
             queryMenu('main', defaultMainMenu);
 
             $scope.global = {
