@@ -12,6 +12,7 @@ angular.module('mean.auth').config(['$stateProvider',
             $http.get('/loggedin').success(function(user) {
                 // Authenticated
                 if (user !== '0') {
+                    console.log('client-----> user!== 0');
                     $timeout(deferred.reject);
                     $location.url('/login');
                 }
@@ -28,7 +29,7 @@ angular.module('mean.auth').config(['$stateProvider',
             .state('auth.login', {
                 url: '/login',
                 templateUrl: 'public/auth/views/login.html',
-                rsesolve: {
+                resolve: {
                     loggedin: checkLoggedOut
                 }
             })
