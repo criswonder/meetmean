@@ -85,6 +85,14 @@ angular.module('ablum_module', [])
                 $state.go('create_item',{albumId:album._id},{obj: album});
             };
 
+            $scope.favorite = function(album){
+                console.log('favorite get called');
+                console.log($rootScope.user);
+                console.log($scope.user);
+                
+            };
+
+
             $http.get('/albums').success(function(data) {
                  $scope.albums = data.result;
                  

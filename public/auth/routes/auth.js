@@ -7,7 +7,7 @@ angular.module('mean.auth').config(['$stateProvider',
         var checkLoggedOut = function($q, $timeout, $http, $location) {
             // Initialize a new promise
             var deferred = $q.defer();
-            console.log('-----> checkLoggedOut');
+            console.log('client-----> checkLoggedOut');
             // Make an AJAX call to check if the user is logged in
             $http.get('/loggedin').success(function(user) {
                 // Authenticated

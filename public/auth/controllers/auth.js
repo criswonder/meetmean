@@ -16,7 +16,9 @@ angular.module('mean.controllers.login', [])
                         // authentication OK
                         $scope.loginError = 0;
                         $rootScope.user = response.user;
-                        // $rootScope.$emit('loggedin');
+                        console.log($rootScope.user );
+                        console.log("response.redirect:"+response.redirect);
+                        $rootScope.$emit('loggedin');
                         if (response.redirect) {
                             if (window.location.href === response.redirect) {
                                 //This is so an admin user will get full admin page
