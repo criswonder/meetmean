@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    // Category = mongoose.model('Category'),
+    Category = mongoose.model('Category'),
+    User = mongoose.model('User'),
     AblumItem = mongoose.model('AblumItem'),
     User_Ablum = mongoose.model('user_ablum');
 
@@ -16,24 +17,77 @@ exports.render = function(req, res) {
     res.render('categorys/create', { 
     });
 };
-exports.listjson = function(req, res) {
+
+var fulljson = {
+    forceUpdate:false,
+    appVersion:1
+};
+
+function getUserInfo(req,res,id){
+    User.find({_id:id}).exec(function(error,results){
+        if (error){
+            console.log('getUserInfo error');
+            return res.status(400); 
+        }
+
+        fulljson.user = results;
+                
+        res.status(200);
+        res.send(fulljson);
+    });
+}
+
+function getUserFav(req,res){
+    var user_id = req.query.user_id;
+    if(user_id){
+        console.log('user_id found!');
+        User_Ablum.find().exec( function(error, results){
+                if (error){
+                    console.log('getUserFav have error');
+                   return res.status(400); 
+                } 
+                
+                fulljson.user_fav = results;
+                
+                // res.status(200);
+                // res.send(fulljson);
+
+                getUserInfo(req,res,user_id);
+            });
+    }else{
+        console.log('no user_id found!');
+        fulljson.user_fav = [];
+
+        res.status(200);
+        res.send(fulljson);
+    }
+}
+
+function getCategorys(req,res){
+    Category.find().exec( function(error, results){
+        if (error){
+            console.log('getCategorys have error');
+           return res.status(400); 
+        } 
+        
+        fulljson.categorys = results;
+        
+        getUserFav(req,res);
+    });
+}
+
+
+
+exports.fulljson = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
     AblumItem.find().exec( function(error, results){
         if (error){
             console.log('category list have error');
            return res.status(400); 
         } 
-        // console.log(results);
-        // for(var i=0;i<results.length;i++){
-        //     console.log(results[i]);
-        // }
-        res.status(200);
-        res.send({
-            result:results
-        });
-        // res.render('categorys/list',{result:results});
+        fulljson.album = results;
+        getCategorys(req,res);
     });
-    
 };
 /*
 查询所有album

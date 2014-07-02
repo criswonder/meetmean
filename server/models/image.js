@@ -48,4 +48,4 @@ var ImageSchema = new Schema({
 
  
 
-mongoose.model('AblumItem', CategorySchema);
+mongoose.model('Image', ImageSchema);

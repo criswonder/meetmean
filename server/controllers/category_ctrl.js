@@ -105,8 +105,7 @@ exports.create_ablum_item = function(req, res) {
     console.log(category);
     category.save(
         function(err) {
-            
-        if (err) {
+            if (err) {
             console.log('err:'+err);
             switch (err.code) {
                 case 11000:
