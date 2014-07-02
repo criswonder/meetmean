@@ -21,4 +21,6 @@ module.exports = function(app, passport) {
     app.route('/albums/fav').post(items_ctrl.fav);
     app.route('/albums/:ablumId').get(items_ctrl.get);
 
+    //app调用的接口
+    app.route('/albums.json').get(items_ctrl.list);
 };

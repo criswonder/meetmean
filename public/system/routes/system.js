@@ -4,10 +4,10 @@
 angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
             // For unmatched routes:
-            $urlRouterProvider.otherwise('/');
-            // $urlRouterProvider.when('/albums/:albumId',{
-            //     templateUrl: 'public/auth/views/index.html',
-            //     controller: 'AlbumViewControl'
+            // $urlRouterProvider.otherwise('/');
+            // $urlRouterProvider.when('/albums2',{
+            //      url: '/',
+            //     templateUrl: 'public/system/views/test.html'
             // }).otherwise('/');
 
             // states for my app
@@ -28,11 +28,17 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: 'public/system/views/item_list.html',
                     controller: 'ItemListControl'
                 })
+                .state('test',{
+                    url: '/test',
+                    templateUrl: 'public/system/views/test.html',
+                    controller: function(){}
+                })
                  .state('detail',{
                     url: '/albums/:albumId',
                     templateUrl: 'public/system/views/album.html',
                     controller: 'AlbumViewControl'
                 });
+                 // .otherwise('/');
 
             // $urlRouterProvider.
             //   when('/albums/:albumId', {

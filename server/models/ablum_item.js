@@ -30,13 +30,22 @@ var CategorySchema = new Schema({
     des: {
         type: String
     },
-    price: {
+    /**此相册需要的积分
+    **/
+    credit: {
         type: Number,
         default:0
     },
     category_id: {
         type: String,
-        required: true,
+        required: true
+    },
+    /**用于用户后续赚取积分
+    **/
+    creator_id: {
+        type: String,
+        default: 'sysadmin',
+        required: true
     },
     create_time: {
         type: String,

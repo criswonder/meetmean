@@ -45,6 +45,12 @@ var UserSchema = new Schema({
         type: String,
         default: 'local'
     },
+    /**信用 积分制度
+    **/
+    credits: {
+        type: Number,
+        default:0
+    },
     salt: String,
     facebook: {},
     twitter: {},

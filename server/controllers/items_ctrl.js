@@ -16,7 +16,25 @@ exports.render = function(req, res) {
     res.render('categorys/create', { 
     });
 };
-
+exports.listjson = function(req, res) {
+    // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
+    AblumItem.find().exec( function(error, results){
+        if (error){
+            console.log('category list have error');
+           return res.status(400); 
+        } 
+        // console.log(results);
+        // for(var i=0;i<results.length;i++){
+        //     console.log(results[i]);
+        // }
+        res.status(200);
+        res.send({
+            result:results
+        });
+        // res.render('categorys/list',{result:results});
+    });
+    
+};
 /*
 查询所有album
 */
