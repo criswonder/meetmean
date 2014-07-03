@@ -84,6 +84,9 @@ exports.create = function(req, res, next) {
  * Send User
  */
 exports.me = function(req, res) {
+    // console.log(req.user);
+    // console.log(req.user || null);
+    // console.log(req.user && null);
     res.jsonp(req.user || null);
 };
 

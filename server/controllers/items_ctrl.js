@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     Category = mongoose.model('Category'),
     User = mongoose.model('User'),
     AblumItem = mongoose.model('AblumItem'),
-    User_Ablum = mongoose.model('user_ablum');
+    Images = mongoose.model('Image'),
+    UserFav = mongoose.model('user_fav');
 
  
 
@@ -20,8 +21,24 @@ exports.render = function(req, res) {
 
 var fulljson = {
     forceUpdate:false,
+    apkDownloadUrl:'',
     appVersion:1
 };
+
+
+function getImages(req,res){
+    Images.find().exec(function(error,results){
+        if (error){
+            console.log('getImages error');
+            return res.status(400); 
+        }
+
+        fulljson.images = results;
+                
+        res.status(200);
+        res.send(fulljson);
+    });
+}
 
 function getUserInfo(req,res,id){
     User.find({_id:id}).exec(function(error,results){
@@ -31,9 +48,8 @@ function getUserInfo(req,res,id){
         }
 
         fulljson.user = results;
-                
-        res.status(200);
-        res.send(fulljson);
+
+        getImages(req,res);
     });
 }
 
@@ -41,7 +57,7 @@ function getUserFav(req,res){
     var user_id = req.query.user_id;
     if(user_id){
         console.log('user_id found!');
-        User_Ablum.find().exec( function(error, results){
+        UserFav.find().exec( function(error, results){
                 if (error){
                     console.log('getUserFav have error');
                    return res.status(400); 
@@ -135,13 +151,13 @@ exports.get = function(req, res) {
     
 };
 exports.fav = function(req, res) {
-    var item = new User_Ablum(req.body);
+    var item = new UserFav(req.body);
     var u_id= item.user_id;
-    var a_id = item.ablum_id;
+    var a_id = item.image_id;
    
     console.log(u_id);
     console.log(a_id);
-    User_Ablum.find({user_id:u_id,ablum_id:a_id}).exec( function(error, results){
+    UserFav.find({user_id:u_id,image_id:a_id}).exec( function(error, results){
         if (error){
             console.log('fav find have error');
            return res.status(400); 
@@ -149,8 +165,8 @@ exports.fav = function(req, res) {
         console.log(results);
         // var fav_result = false;
         if(results && results.length>0){
-            // User_Ablum.find({user_id:u_id,ablum_id:a_id}).remove();
-            User_Ablum.remove({user_id:u_id,ablum_id:a_id},function(error, count){});
+            // UserFav.find({user_id:u_id,ablum_id:a_id}).remove();
+            UserFav.remove({user_id:u_id,image_id:a_id},function(error, count){});
             res.status(200);
             res.send({
                 fav_result:false

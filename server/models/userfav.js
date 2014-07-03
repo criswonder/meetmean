@@ -23,7 +23,7 @@ var User_Ablum = new Schema({
         type: String,
         required: true,
     },
-    ablum_id: {
+    image_id: {
         type: String,
         required: true,
     }
@@ -31,4 +31,4 @@ var User_Ablum = new Schema({
 
  
 
-mongoose.model('user_ablum', User_Ablum);
+mongoose.model('user_fav', User_Ablum);

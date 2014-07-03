@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Category = mongoose.model('Category'),
+    ImageSchema = mongoose.model('Image'),
     AblumItem = mongoose.model('AblumItem');
 
  
@@ -101,9 +102,26 @@ exports.list = function(req, res) {
 
 exports.create_ablum_item = function(req, res) {
     console.log('xxxxxxxxxxxxxxxxxxxx------------444------------xxxxxxxxxxxxxxxxxxxx');
-    var category = new AblumItem(req.body);
-    console.log(category);
-    category.save(
+    var album = new AblumItem(req.body);
+    console.log(album);
+
+    var imageUrls = album.urls.split(',');
+    var oneImage = null;
+    var images = [];
+    for( var index in imageUrls){
+        oneImage = new ImageSchema();
+        console.log(imageUrls[index]);
+        oneImage.url= imageUrls[index];
+        oneImage.category_id = album.category_id;
+        oneImage.ablum_id = album._id;
+        images.push(oneImage);
+
+        console.log(oneImage);
+    }
+    console.log(images);
+    ImageSchema.create(images);
+
+    album.save(
         function(err) {
             if (err) {
             console.log('err:'+err);
@@ -120,10 +138,6 @@ exports.create_ablum_item = function(req, res) {
         }
         console.log('xxx');
         res.redirect(200,'create_item');
-        
-        // res.render('categorys/create',{});
     });
- 
-    
 };
 
