@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
     app.route('/category/list').post(category.create_ablum_item);
 
     app.route('/albums').get(items_ctrl.list);
-    app.route('/albums').get(items_ctrl.list);
+    app.route('/albums/remove').get(category.remove_ablum);
     app.route('/albums/:ablumId').get(items_ctrl.get);
 
     //app调用的接口

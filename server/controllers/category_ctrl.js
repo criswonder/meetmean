@@ -100,12 +100,32 @@ exports.list = function(req, res) {
     
 };
 
+exports.remove_ablum = function(req, res) {
+    var id = req.query.aid;
+    console.log('xxxxxxxxxxxxxxxxxxxx-----remove_ablum-------------------xxxxxxxxxxxxxxxxxxxx');
+    AblumItem.remove({_id:id}).exec( function(error, results){
+        if (error){
+            console.log('category list have error');
+           return res.status(400); 
+        } 
+        res.status(200);
+        res.send({});
+    });
+    
+};
+
+
 exports.create_ablum_item = function(req, res) {
     console.log('xxxxxxxxxxxxxxxxxxxx------------444------------xxxxxxxxxxxxxxxxxxxx');
     var album = new AblumItem(req.body);
     console.log(album);
-
-    var imageUrls = album.urls.split(',');
+    var semicolonIndex = album.urls.indexOf(';');
+    var imageUrls;
+    if(semicolonIndex && semicolonIndex>0){
+        imageUrls = album.urls.split(';');
+    }else{
+        imageUrls = album.urls.split(',');
+    }
     var oneImage = null;
     var images = [];
     for( var index in imageUrls){

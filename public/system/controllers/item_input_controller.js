@@ -64,7 +64,8 @@ angular.module('ablum_module', [])
                                 window.location = response.redirect;
                             }
                         } else {
-                            $location.url('/');
+//                            $location.url('/');
+                            console.log('after create album success');
                         }
                     })
                     .error(function() {
@@ -84,6 +85,16 @@ angular.module('ablum_module', [])
                 console.log('editAlbum get called');
                 $state.go('create_item',{albumId:album._id},{obj: album});
             };
+            $scope.remove = function(album){
+                console.log('remove get called'+album);
+                $http.get('/albums/remove?aid='+album._id).success(function(data) {
+                   alert('delete success');
+                });
+
+
+            };
+
+
 
             $http.get('/albums').success(function(data) {
                  $scope.albums = data.result;
@@ -92,8 +103,8 @@ angular.module('ablum_module', [])
                  for( var index in $scope.albums){
                     item = $scope.albums[index];
                     console.log(item);
-                    var imageUrls = item.urls.split(',');
-                    item.imageUrl = imageUrls[0];
+//                    var imageUrls = item.urls.split(',');
+                    item.imageUrl = item.images[0].url;
                  }
             });
 
