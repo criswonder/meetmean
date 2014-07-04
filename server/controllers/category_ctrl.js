@@ -121,6 +121,8 @@ exports.create_ablum_item = function(req, res) {
     console.log(images);
     ImageSchema.create(images);
 
+    album.images = images;
+
     album.save(
         function(err) {
             if (err) {

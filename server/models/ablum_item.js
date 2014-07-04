@@ -27,6 +27,11 @@ var CategorySchema = new Schema({
         type: String,
         required: true,
     },
+    images: {
+        type: Array,
+        required: true,
+    },
+    
     des: {
         type: String
     },

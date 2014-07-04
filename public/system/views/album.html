@@ -3,8 +3,9 @@
   <div class="content">
   <h1>{{album.name}}</h1>
     
-     <div ng-repeat="img in album.imageUrls">
-        <img ng-src="{{img}}" class="content">
+     <div ng-repeat="img in album.images">
+        <img ng-src="{{img.url}}" class="content">
+         <button id="fav" ng-click="favorite(img)">喜欢</button>
       </div>
   </div>
 </div>
