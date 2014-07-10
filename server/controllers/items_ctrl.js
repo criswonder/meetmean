@@ -47,7 +47,7 @@ function getUserInfo(req,res,id){
             return res.status(400); 
         }
 
-        fulljson.user = results;
+        fulljson.user = results[0];
 
         getImages(req,res);
     });

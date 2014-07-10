@@ -20,18 +20,19 @@ var mongoose = require('mongoose'),
  */
 var UserSchema = new Schema({
     name: {
-        type: String,
-        required: true,
+        type: String
+        // required: true,
     },
     email: {
         type: String,
+        unique: true,
         required: true,
         match: [/.+\@.+\..+/, 'Please enter a valid email'],
     },
     username: {
-        type: String,
-        unique: true,
-        required: true
+        type: String
+        // unique: true,
+        // required: true
     },
     roles: {
         type: Array,
