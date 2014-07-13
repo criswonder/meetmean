@@ -72,13 +72,13 @@ exports.create = function(req, res, next) {
                     emsg = 'Please fill all the required fields';
             }
             if(fromApp){
-                res.status(200).send({user_id:user._id,error_msg:emsg});
+                res.status(200).send({user_id:user._id,error_msg:emsg,'user':user});
             }else{
                 return res.status(400).send(emsg);
             }
         }
         if(fromApp){
-            res.status(200).send({user_id:user._id,error_msg:emsg});
+            res.status(200).send({user_id:user._id,error_msg:emsg,'user':user});
         }else{
             req.logIn(user, function(err) {
             if (err) return next(err);

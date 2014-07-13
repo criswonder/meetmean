@@ -24,6 +24,7 @@ module.exports = function(app, passport) {
             res.send(req.isAuthenticated() ? req.user : '0');
         });
 
+    // 这里的passport是在server.js里面定义的  passport = require('passport')
     // Setting the local strategy route
     app.route('/login')
         .post(passport.authenticate('local', {

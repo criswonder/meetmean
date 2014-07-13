@@ -57,7 +57,7 @@ function getUserFav(req,res){
     var user_id = req.query.user_id;
     if(user_id){
         console.log('user_id found!');
-        UserFav.find().exec( function(error, results){
+        UserFav.find({'user_id':user_id}).exec( function(error, results){
                 if (error){
                     console.log('getUserFav have error');
                    return res.status(400); 
