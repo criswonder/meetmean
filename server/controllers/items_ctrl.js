@@ -96,7 +96,7 @@ function getCategorys(req,res){
 
 exports.fulljson = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
-    AblumItem.find().exec( function(error, results){
+    AblumItem.find().sort({create_time: -1}).exec( function(error, results){
         if (error){
             console.log('category list have error');
            return res.status(400); 
