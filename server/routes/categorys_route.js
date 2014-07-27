@@ -3,6 +3,7 @@
 // User routes use category controller
 var category = require('../controllers/category_ctrl');
 var items_ctrl = require('../controllers/items_ctrl');
+var feedback_ctrl = require('../controllers/feedback_ctrl');
 
 module.exports = function(app, passport) {
  
@@ -25,4 +26,5 @@ module.exports = function(app, passport) {
     app.route('/albums.json').get(items_ctrl.list);
     app.route('/albums/fav').post(items_ctrl.fav);
     app.route('/full.json').get(items_ctrl.fulljson);
+    app.route('/feedback').post(feedback_ctrl.create);
 };
