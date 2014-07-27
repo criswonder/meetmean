@@ -42,6 +42,7 @@ angular.module('ablum_module', [])
             // Register the login() function
             $scope.create_item = function() {
                 $http.post('/category/list', {
+                    _id:$scope.item._id,
                     name: $scope.item.name,
                     des: $scope.item.des,
                     price: $scope.item.price,

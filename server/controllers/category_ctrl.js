@@ -118,7 +118,7 @@ exports.remove_ablum = function(req, res) {
 exports.create_ablum_item = function(req, res) {
     console.log('xxxxxxxxxxxxxxxxxxxx------------444------------xxxxxxxxxxxxxxxxxxxx');
     var album = new AblumItem(req.body);
-    console.log(album);
+    // console.log(album);
     var semicolonIndex = album.urls.indexOf(';');
     var imageUrls;
     if(semicolonIndex && semicolonIndex>0){
@@ -136,12 +136,35 @@ exports.create_ablum_item = function(req, res) {
         oneImage.ablum_id = album._id;
         images.push(oneImage);
 
-        console.log(oneImage);
+        // console.log(oneImage);
     }
-    console.log(images);
+    // console.log(images);
     ImageSchema.create(images);
 
-    album.images = images;
+    album.images = images;  
+
+    //------------------------------------------------
+    //开始删除
+    //------------------------------------------------
+    AblumItem.remove({_id:album.id}).exec( function(error, results){
+        if (error){
+            console.log('AblumItem.remove({_id:album._id}) have error');
+            return res.status(400);
+        }
+        console.log('AblumItem.remove success '+album._id);
+        // res.status(200);
+        // res.send({});
+    });
+    ImageSchema.remove({ablum_id:album.id}).exec( function(error, results){
+        if (error){
+            console.log('ImageSchema.remove({ablum_id:album._id}) has error');
+            return res.status(400);
+        }
+        console.log('ImageSchema.remove success '+album._id);
+        // res.status(200);
+        // res.send({});
+    });
+
 
     album.save(
         function(err) {
@@ -158,7 +181,6 @@ exports.create_ablum_item = function(req, res) {
 
             return res.status(400);
         }
-        console.log('xxx');
         res.redirect(200,'create_item');
     });
 };
