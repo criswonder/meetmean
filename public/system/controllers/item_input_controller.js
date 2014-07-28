@@ -39,7 +39,7 @@ angular.module('ablum_module', [])
             }
             console.log($stateParams.albumId);
             console.log($stateParams.abc);
-            // Register the login() function
+            // Register the login() function    
             $scope.create_item = function() {
                 $http.post('/category/list', {
                     _id:$scope.item._id,
@@ -90,6 +90,7 @@ angular.module('ablum_module', [])
                 console.log('remove get called'+album);
                 $http.get('/albums/remove?aid='+album._id).success(function(data) {
                    alert('delete success');
+                   window.location.reload();
                 });
 
 
