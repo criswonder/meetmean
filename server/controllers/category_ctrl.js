@@ -181,7 +181,7 @@ exports.create_ablum_item = function(req, res) {
 
             return res.status(400);
         }
-        res.redirect(200,'create_item');
+        res.send({redirect:true}).redirect(200,'albums');
     });
 };
 

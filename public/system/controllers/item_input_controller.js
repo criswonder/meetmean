@@ -52,22 +52,22 @@ angular.module('ablum_module', [])
                     .success(function(response) {
                         console.log('success!!!!!!');
                         alert('success');
-                        
+                        window.location='/#!albums';
                         // // authentication OK
                         // $scope.loginError = 0;
                         // $rootScope.user = response.user;
                         // $rootScope.$emit('loggedin');
-                        if (response.redirect) {
-                            if (window.location.href === response.redirect) {
-                                //This is so an admin user will get full admin page
-                                window.location.reload();
-                            } else {
-                                window.location = response.redirect;
-                            }
-                        } else {
-//                            $location.url('/');
-                            console.log('after create album success');
-                        }
+//                         if (response.redirect) {
+//                             if (window.location.href === response.redirect) {
+//                                 //This is so an admin user will get full admin page
+//                                 window.location.reload();
+//                             } else {
+//                                 window.location = response.redirect;
+//                             }
+//                         } else {
+// //                            $location.url('/');
+//                             console.log('after create album success');
+//                         }
                     })
                     .error(function() {
                         $scope.loginerror = 'Authentication failed.';
@@ -95,9 +95,6 @@ angular.module('ablum_module', [])
 
 
             };
-
-
-
             $http.get('/albums').success(function(data) {
                  $scope.albums = data.result;
                  
@@ -105,7 +102,7 @@ angular.module('ablum_module', [])
                  for( var index in $scope.albums){
                     item = $scope.albums[index];
                     console.log(item);
-//                    var imageUrls = item.urls.split(',');
+//                      var imageUrls = item.urls.split(',');
                     item.imageUrl = item.images[0].url;
                  }
             });
@@ -123,20 +120,11 @@ angular.module('ablum_module', [])
                  // $scope.albums = data.result;
                  console.log('AlbumViewControl-->'+data.result);
                  var album = data.result[0];
-//                 var imageUrls = album.urls.split(',');
-//                 for( var index in imageUrls){
-//                    console.log(imageUrls[index]);
-//
-//                 }
-//                 album.imageUrls = imageUrls;
-                 console.log(album);
                  $scope.album = album;
             });
 
             $scope.favorite = function(img){
                 console.log('favorite get called');
-//                console.log($rootScope.user);
-//                console.log($scope.user);
                 console.log(img);
                 $http.post('/albums/fav',{user_id:$scope.user._id,image_id:img._id})
                     .success(function(response) {
@@ -151,7 +139,5 @@ angular.module('ablum_module', [])
                         alert('create_item failed');
                     });
             };
-            // console.log('AlbumViewControl-->'+$stateParams.albumId);
-            // console.log('AlbumViewControl-->'+$stateParams.fuck);
         }
     ]);
