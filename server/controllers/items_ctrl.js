@@ -151,7 +151,7 @@ exports.get = function(req, res) {
     
 };
 exports.download = function(req, res) {
-    if(req.params.version<2){
+    if(req.query.version<1){
         res.status(200).send({hasNewVersion:true,update_url:'http://106.187.99.142:3000/download.apk'});    
     }else{
         res.status(200).send({hasNewVersion:false,update_url:''});    
