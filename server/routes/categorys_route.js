@@ -27,6 +27,7 @@ module.exports = function(app, passport) {
     app.route('/albums/fav').post(items_ctrl.fav);
     app.route('/full.json').get(items_ctrl.fulljson);
     app.route('/download').get(items_ctrl.download);
+    app.route('/download.apk').get(items_ctrl.download_apk);
 
     app.route('/feedback').post(feedback_ctrl.create);
 };

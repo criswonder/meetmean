@@ -151,23 +151,10 @@ exports.get = function(req, res) {
     
 };
 exports.download = function(req, res) {
-    // var id = req.params.ablumId;
-    // console.log(id);
-    // AblumItem.find({_id:id}).exec( function(error, results){
-    //     if (error){
-    //         console.log('category list have error');
-    //        return res.status(400); 
-    //     } 
-    //     console.log(results);
-    //     // for(var i=0;i<results.length;i++){
-    //     //     console.log(results[i]);
-    //     // }\
-    //     res.status(200);
-    //     res.send({
-    //         result:results
-    //     });
-    //     // res.render('categorys/list',{result:results});
-    // });
+    res.status(200).send({hasNewVersion:true,update_url:'http://106.187.99.142:3000/download.apk'});
+};
+exports.download_apk = function(req, res) {
+ 
     res.download(__dirname+'/360MM.apk', '360MM.apk', function(err){
       if (err) {
         // handle error, keep in mind the response may be partially-sent
