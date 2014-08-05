@@ -169,19 +169,21 @@ exports.create_ablum_item = function(req, res) {
     album.save(
         function(err) {
             if (err) {
-            console.log('err:'+err);
-            switch (err.code) {
-                case 11000:
-                case 11001:
-                    res.status(400).send('该册子已经创建了');
-                    break;
-                default:
-                    res.status(400).send('必填项没有哦');
-            }
+                console.log('err:'+err);
+                switch (err.code) {
+                    case 11000:
+                    case 11001:
+                        res.status(400).send('该册子已经创建了');
+                        break;
+                    default:
+                        res.status(400).send('必填项没有哦');
+                }
 
-            return res.status(400);
-        }
-        res.send({redirect:true}).redirect(200,'albums');
+                return res.status(400);
+            }else{
+                res.send({redirect:true}).redirect(200,'albums');    
+            }
+        
     });
 };
 
