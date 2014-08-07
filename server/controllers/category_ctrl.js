@@ -148,8 +148,8 @@ exports.create_ablum_item = function(req, res) {
     //------------------------------------------------
     AblumItem.remove({_id:album.id}).exec( function(error, results){
         if (error){
-            console.log('AblumItem.remove({_id:album._id}) have error');
-            return res.status(400);
+            console.log('AblumItem.remove({_id:album._id}) have error'+album._id);
+            // return res.status(400);
         }
         console.log('AblumItem.remove success '+album._id);
         // res.status(200);
@@ -157,8 +157,8 @@ exports.create_ablum_item = function(req, res) {
     });
     ImageSchema.remove({ablum_id:album.id}).exec( function(error, results){
         if (error){
-            console.log('ImageSchema.remove({ablum_id:album._id}) has error');
-            return res.status(400);
+            console.log('ImageSchema.remove({ablum_id:album._id}) has error'+album._id);
+            // return res.status(400);
         }
         console.log('ImageSchema.remove success '+album._id);
         // res.status(200);
@@ -173,10 +173,9 @@ exports.create_ablum_item = function(req, res) {
                 switch (err.code) {
                     case 11000:
                     case 11001:
-                        res.status(400).send('该册子已经创建了');
-                        break;
+                        return res.status(400).send('该册子已经创建了');
                     default:
-                        res.status(400).send('必填项没有哦');
+                        return res.status(400).send('必填项没有哦');
                 }
 
                 return res.status(400);
