@@ -128,10 +128,17 @@ exports.create_ablum_item = function(req, res) {
     }
     var oneImage = null;
     var images = [];
+    var urlArgs = [];
+    var urlWithWH = null;
     for( var index in imageUrls){
         oneImage = new ImageSchema();
-        console.log(imageUrls[index]);
-        oneImage.url= imageUrls[index];
+        urlWithWH = imageUrls[index];
+        console.log(urlWithWH);
+        urlArgs =  urlWithWH.split('##');
+        console.log(urlArgs[0]+','+urlArgs[1]+','+urlArgs[2]);
+        oneImage.url= urlArgs[0];
+        oneImage.width = urlArgs[1];
+        oneImage.height = urlArgs[2];
         oneImage.category_id = album.category_id;
         oneImage.ablum_id = album._id;
         images.push(oneImage);

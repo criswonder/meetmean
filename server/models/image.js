@@ -17,8 +17,12 @@ var ImageSchema = new Schema({
         type: String,
         required: true,
     },
-    width_height: {
-        type: String,
+    width: {
+        type: Number,
+        required: false,
+    },
+    height: {
+        type: Number,
         required: false,
     },
     status: {
