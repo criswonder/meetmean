@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Category = mongoose.model('Category'),
     User = mongoose.model('User'),
     AblumItem = mongoose.model('AblumItem'),
-    Images = mongoose.model('Image'),
+    // Images = mongoose.model('Image'),
     UserFav = mongoose.model('user_fav');
 
  
@@ -26,19 +26,19 @@ var fulljson = {
 };
 
 
-function getImages(req,res){
-    Images.find().exec(function(error,results){
-        if (error){
-            console.log('getImages error');
-            return res.status(400); 
-        }
+// function getImages(req,res){
+//     Images.find().exec(function(error,results){
+//         if (error){
+//             console.log('getImages error');
+//             return res.status(400); 
+//         }
 
-        fulljson.images = results;
+//         fulljson.images = results;
                 
-        res.status(200);
-        res.send(fulljson);
-    });
-}
+//         res.status(200);
+//         res.send(fulljson);
+//     });
+// }
 
 function getUserInfo(req,res,id){
     User.find({_id:id}).exec(function(error,results){
@@ -48,8 +48,9 @@ function getUserInfo(req,res,id){
         }
 
         fulljson.user = results[0];
-
-        getImages(req,res);
+        res.status(200);
+        res.send(fulljson);
+        // getImages(req,res);
     });
 }
 
@@ -101,7 +102,7 @@ exports.fulljson = function(req, res) {
             console.log('category list have error');
            return res.status(400); 
         } 
-        fulljson.album = results;
+        fulljson.albums = results;
         getCategorys(req,res);
     });
 };
