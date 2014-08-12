@@ -58,6 +58,7 @@ var CategorySchema = new Schema({
     }
 });
 
- 
+var mongoosePaginate = require('mongoose-paginate');
+CategorySchema.plugin(mongoosePaginate);
 
 mongoose.model('AblumItem', CategorySchema);

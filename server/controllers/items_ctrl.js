@@ -10,6 +10,11 @@ var mongoose = require('mongoose'),
     // Images = mongoose.model('Image'),
     UserFav = mongoose.model('user_fav');
 
+// var mongoosePages = require('mongoose-pages');
+// mongoosePages.anchor(AblumItem);
+
+
+
  
 
 exports.render = function(req, res) {
@@ -94,18 +99,58 @@ function getCategorys(req,res){
 }
 
 
-
+var docsPerPage = 10;
 exports.fulljson = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
-    AblumItem.find().sort({create_time: -1}).exec( function(error, results){
-        if (error){
+    var pageNum = req.query.pageNum?req.query.pageNum:1;
+
+    AblumItem.paginate({}, pageNum, 10, function(error, pageCount, paginatedResults, itemCount) {
+       if (error){
             console.log('category list have error');
            return res.status(400); 
         } 
-        fulljson.albums = results;
+        fulljson.albums = paginatedResults;
         getCategorys(req,res);
-    });
+    },{create_time: -1});
+
+    // AblumItem.find().sort({create_time: -1}).exec( function(error, results){
+    //     if (error){
+    //         console.log('category list have error');
+    //        return res.status(400); 
+    //     } 
+    //     fulljson.albums = results;
+    //     getCategorys(req,res);
+    // });
 };
+
+exports.getAlbums = function(req, res) {
+    // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
+    var pageNum = req.query.pageNum?req.query.pageNum:1;
+    var pageSize = req.query.pageSize?req.query.pageSize:10;
+    var category_id = req.query.cid;
+
+    AblumItem.paginate({}, pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
+       if (error){
+            console.log('category list have error');
+           return res.status(400); 
+        } 
+        res.status(200).send({
+            albums:paginatedResults,
+            itemCount:itemCount,
+            pageCount:pageCount
+        });
+    },{create_time: -1,'category_id':category_id});
+
+    // AblumItem.find().sort({create_time: -1}).exec( function(error, results){
+    //     if (error){
+    //         console.log('category list have error');
+    //        return res.status(400); 
+    //     } 
+    //     fulljson.albums = results;
+    //     getCategorys(req,res);
+    // });
+};
+
 /*
 查询所有album
 */
