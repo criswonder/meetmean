@@ -128,8 +128,9 @@ exports.getAlbums = function(req, res) {
     var pageNum = req.query.pageNum?req.query.pageNum:1;
     var pageSize = req.query.pageSize?req.query.pageSize:10;
     var category_id = req.query.cid;
+    console.log('category_id'+category_id);
 
-    AblumItem.paginate({}, pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
+    AblumItem.paginate({'category_id':category_id}, pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
        if (error){
             console.log('category list have error');
            return res.status(400); 
@@ -139,7 +140,7 @@ exports.getAlbums = function(req, res) {
             itemCount:itemCount,
             pageCount:pageCount
         });
-    },{create_time: -1,'category_id':category_id});
+    },{create_time: -1});
 
     // AblumItem.find().sort({create_time: -1}).exec( function(error, results){
     //     if (error){
