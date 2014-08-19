@@ -225,132 +225,46 @@ exports.download_apk = function(req, res) {
 exports.fav = function(req, res) {
     var item = new UserFav(req.body);
     var u_id= item.user_id;
-    var a_id = item.image_id;
+    var img_id = item.image_id;
    
     console.log(u_id);
-    console.log(a_id);
+    console.log(img_id);
 
-//    function insertFavs(){
-//        return Q.nfcall(,{user_id:u_id,image_id:a_id});
-//    }
-//
-//    Q.invoke.find(UserFav,'find',{user_id:u_id,image_id:a_id}).then(function(results){
-//
-//    }).fail(function(error){
-//
-//    });
+    UserFav.findOne({user_id:u_id,image_id:img_id}).exec(
+      function(error, results){
+          if (error){
+              console.log('fav find have error');
+              return res.status(400);
+          }
+          console.log(results);
+          // var fav_result = false;
+          if(results && results.length>0){
+              // UserFav.find({user_id:u_id,ablum_id:a_id}).remove();
+              UserFav.remove({user_id:u_id,image_id:img_id},function(error, count){});
+              res.status(200);
+              res.send({
+                  fav_result:false
+              });
+          }else{
+              Images.findById(img_id,'url',function(error,results){
+                  console.log('2'+results);
+                  if(results){
+                      item.url = results.url;
+                      item.save(function(error,fav_result){
+                          if (error){
+                              console.log('item.save have error');
+                              return res.status(400);
+                          }
+                          console.log('save result = '+fav_result);
+                      });
+                  }else{
+                      console.error('img not found!!');
+                  }
+              });
 
-//    var promise = UserFav.find({user_id:u_id,image_id:a_id}).exec();
-//
-//    promise.then(function(results){
-//        if(results && results.length>0){
-//            console.log(results);
-//            return UserFav.remove({user_id:u_id,image_id:a_id}).exec();
-//        }else{
-//            console.log('results is 0');
-//            item.save(function(err) {});
-//            return Promise.promisify(item.save,item);
-//
-//        }
-//    },function(error){
-//        console.log('has error');
-//    });
-
-    var fun1 =function(){return  UserFav.find({user_id:u_id,image_id:a_id}).exec();};
-//    var promise =UserFav.find({user_id:u_id,image_id:a_id}).exec();
-
-    fun1().then(function(results){
-        console.log('0='+results);
-        if(results && results.length>0){
-            return UserFav.findbremove({user_id:u_id,image_id:a_id}).exec();
-        }else{
-
-            var image_id = mongoose.Types.ObjectId(a_id);
-            return Images.find({_id:image_id}).exec();
-        }
-    }).then(
-        function(results){
-            console.log('1='+results);
-
-            if(isNaN(results)){
-                item.url = results.url;
-                var fun2 = Promise.promisify(item.save,item);
-                return
-            }else{
-                //console.log('just remove fav');
-                return -1;
-            }
-
-        }
-    ).then(
-        function(results){
-            console.log('2 = '+results);
-            if(!isNaN(results)){
-                if(results===-1){
-                    res.status(200);
-                    res.send({
-                        fav_result:false
-                    });
-                }else{
-                    res.status(200);
-                    res.send({
-                        fav_result:true
-                    });
-                }
-            }
-        }
+          }
+      }
     );
-//    var promise = UserFav.find({user_id:u_id,image_id:a_id}).exec();
-//    (UserFav.find({user_id:u_id,image_id:a_id}).exec()).then(function(results){
-//        if(results && results.length>0){
-//            console.log(results);
-//        }else{
-//            console.log('results is 0');
-//            item.save(function(err) {});
-//
-//        }
-//    },function(error){
-//        console.log('has error');
-//    });
-
-//    UserFav.find({user_id:u_id,image_id:a_id}).exec( function(error, results){
-//        if (error){
-//            console.log('fav find have error');
-//           return res.status(400);
-//        }
-//        console.log(results);
-//        // var fav_result = false;
-//        if(results && results.length>0){
-//            // UserFav.find({user_id:u_id,ablum_id:a_id}).remove();
-//            UserFav.remove({user_id:u_id,image_id:a_id},function(error, count){});
-//            res.status(200);
-//            res.send({
-//                fav_result:false
-//            });
-//        }else{
-//
-//            console.log(item);
-//            item.save(function(err) {
-//                if (err) {
-//                    switch (err.code) {
-//                    case 11000:
-//                    case 11001:
-//                        res.status(400).send('Categoryname already taken');
-//                        break;
-//                    default:
-//                        res.status(400).send('Please fill all the required fields');
-//                    }
-//
-//                    return res.status(400);
-//                }
-//                res.status(200);
-//                res.send({
-//                        fav_result:true
-//                        });
-//            });
-//        }
-//    });
-    
 };
  
 
