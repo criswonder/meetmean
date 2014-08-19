@@ -26,6 +26,10 @@ var User_Ablum = new Schema({
     image_id: {
         type: String,
         required: true,
+    },
+    url: {
+        type: String,
+        required: true,
     }
 });
 

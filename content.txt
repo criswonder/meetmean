@@ -4,3 +4,11 @@
 db.ablumitems.remove({name:'如梦令'})
 db.ablumitems.remove({name:'于大小姐三点式惊艳私房照'})
 db.ablumitems.remove({name:'泳装的诱惑'})
+
+db.categories.update({"_id" : ObjectId("53a4385d6cc4cd870516b243")},{$set:{name:'异域美女'}});
+
+db.categories.update({"_id" : ObjectId("53a4384f6cc4cd870516b242")},{$set:{name:'车模美女'}});
+
+db.categories.update({"_id" : ObjectId("53a438496cc4cd870516b241")},{$set:{name:'惊艳美女'}});
+
+db.images.find({ablum_id:'53d624aa6fc07043241c25f1'})
