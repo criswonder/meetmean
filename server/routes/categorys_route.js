@@ -24,6 +24,7 @@ module.exports = function(app, passport) {
 
     //app调用的接口
     app.route('/albums.json').get(items_ctrl.list);
+    app.route('/favs').get(items_ctrl.getfavs);//传入uid
     app.route('/albums_query').get(items_ctrl.getAlbums);
     app.route('/albums/fav').post(items_ctrl.fav);
     app.route('/full.json').get(items_ctrl.fulljson);

@@ -266,5 +266,17 @@ exports.fav = function(req, res) {
       }
     );
 };
+
+exports.getfavs = function(req,res){
+    var userid = req.query.uid;
+    console.log('get favs userid='+userid);
+    UserFav.find({user_id:userid}).exec(function(error,results){
+        if (error){
+            console.log('getfavs have error');
+            return res.status(400);
+        }
+        res.status(200).send({favs:results});
+    });
+}
  
 
