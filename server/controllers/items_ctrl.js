@@ -256,6 +256,10 @@ exports.fav = function(req, res) {
                               return res.status(400);
                           }
                           console.log('save result = '+fav_result);
+                          res.status(200);
+                          res.send({
+                              fav_result:true
+                          });
                       });
                   }else{
                       console.error('img not found!!');
