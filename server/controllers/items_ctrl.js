@@ -128,35 +128,42 @@ exports.getAlbums = function(req, res) {
     var pageNum = req.query.pageNum?req.query.pageNum:1;
     var pageSize = req.query.pageSize?req.query.pageSize:10;
     var category_id = req.query.cid;
-    var forward = req.query.forward;
+    var next = req.query.next;
     var ablum_id = req.query.aid;
 
     if(ablum_id){
         console.log('ablum_id='+ablum_id);
-        if(forward){
-            var query = AblumItem.find({'category_id':category_id,'_id':{$lt:ablum_id}}, '_id category_id name',{limit:1},function(error, results) {
-                if (error){
-                    console.log('category list have error');
-                    return res.status(400);
-                }
-                res.status(200).send({
-                    albums:results,
-                    itemCount:1,
-                    pageCount:1
+        if(next){
+            var query = AblumItem.find({'category_id':category_id,'_id':{$lt:ablum_id}}, '_id category_id name')
+                .limit(1)
+                .sort({create_time: -1})
+                .exec(function(error, results) {
+                    if (error) {
+                        console.log('category list have error');
+                        return res.status(400);
+                    }
+                    res.status(200).send({
+                        albums: results,
+                        itemCount: 1,
+                        pageCount: 1
+                    });
                 });
-            }).limit(1).sort({create_time: -1});
+
         }else{
-            var query = AblumItem.find({'category_id':category_id,'_id':{$gt:ablum_id}},'_id category_id name',{limit:1}, function(error, results) {
-                if (error){
-                    console.log('category list have error');
-                    return res.status(400);
-                }
-                res.status(200).send({
-                    albums:results,
-                    itemCount:1,
-                    pageCount:1
+            var query = AblumItem.find({'category_id':category_id,'_id':{$gt:ablum_id}},'_id category_id name')
+                .limit(1)
+                .sort({create_time: -1})
+                .exec(function(error, results) {
+                    if (error) {
+                        console.log('category list have error');
+                        return res.status(400);
+                    }
+                    res.status(200).send({
+                        albums: results,
+                        itemCount: 1,
+                        pageCount: 1
+                    });
                 });
-            }).sort({create_time: -1});
         }
 
     }else{
