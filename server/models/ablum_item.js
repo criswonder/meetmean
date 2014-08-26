@@ -54,7 +54,7 @@ var CategorySchema = new Schema({
     },
     create_time: {
         type: String,
-        default: new Date()+''
+        default: Date.now()
     }
 });
 

@@ -148,7 +148,8 @@ exports.create_ablum_item = function(req, res) {
     // console.log(images);
     ImageSchema.create(images);
 
-    album.images = images;  
+    album.images = images;
+    album.create_time = new Date();
 
     //------------------------------------------------
     //开始删除
