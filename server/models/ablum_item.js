@@ -21,15 +21,15 @@ var mongoose = require('mongoose'),
 var CategorySchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: true
     },
     urls: {
         type: String,
-        required: true,
+        required: true
     },
     images: {
         type: Array,
-        required: true,
+        required: true
     },
     
     des: {

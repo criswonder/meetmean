@@ -125,32 +125,54 @@ exports.fulljson = function(req, res) {
 };
 
 exports.getAlbums = function(req, res) {
-    // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
     var pageNum = req.query.pageNum?req.query.pageNum:1;
     var pageSize = req.query.pageSize?req.query.pageSize:10;
     var category_id = req.query.cid;
-    console.log('category_id'+category_id);
+    var forward = req.query.forward;
+    var ablum_id = req.query.aid;
 
-    AblumItem.paginate({'category_id':category_id}, pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
-       if (error){
-            console.log('category list have error');
-           return res.status(400); 
-        } 
-        res.status(200).send({
-            albums:paginatedResults,
-            itemCount:itemCount,
-            pageCount:pageCount
-        });
-    },{create_time: -1});
+    if(ablum_id){
+        console.log('ablum_id='+ablum_id);
+        if(forward){
+            var query = AblumItem.find({'category_id':category_id,'_id':{$lt:ablum_id}}, '_id category_id name',{limit:1},function(error, results) {
+                if (error){
+                    console.log('category list have error');
+                    return res.status(400);
+                }
+                res.status(200).send({
+                    albums:results,
+                    itemCount:1,
+                    pageCount:1
+                });
+            }).limit(1).sort({create_time: -1});
+        }else{
+            var query = AblumItem.find({'category_id':category_id,'_id':{$gt:ablum_id}},'_id category_id name',{limit:1}, function(error, results) {
+                if (error){
+                    console.log('category list have error');
+                    return res.status(400);
+                }
+                res.status(200).send({
+                    albums:results,
+                    itemCount:1,
+                    pageCount:1
+                });
+            }).sort({create_time: -1});
+        }
 
-    // AblumItem.find().sort({create_time: -1}).exec( function(error, results){
-    //     if (error){
-    //         console.log('category list have error');
-    //        return res.status(400); 
-    //     } 
-    //     fulljson.albums = results;
-    //     getCategorys(req,res);
-    // });
+    }else{
+        console.log('category_id'+category_id);
+        AblumItem.paginate({'category_id':category_id},pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
+            if (error){
+                console.log('category list have error');
+                return res.status(400);
+            }
+            res.status(200).send({
+                albums:paginatedResults,
+                itemCount:itemCount,
+                pageCount:pageCount
+            });
+        },{ columns: '_id,category_id,name'},{ sortBy : { create_time : -1 }});
+    }
 };
 
 /*
@@ -246,10 +268,20 @@ exports.fav = function(req, res) {
                   fav_result:false
               });
           }else{
-              Images.findById(img_id,'url',function(error,results){
+              Images.findById(img_id,function(error,results){
                   console.log('2'+results);
                   if(results){
+                      item._id = results._id;
                       item.url = results.url;
+                      item.width = results.width;
+                      item.height = results.height;
+                      item.status = results.status;
+
+                      item.category_id = results.category_id;
+                      item.ablum_id = results.ablum_id;
+                      item.creator_id = results.creator_id;
+                      item.create_time = results.create_time;
+
                       item.save(function(error,fav_result){
                           if (error){
                               console.log('item.save have error');
@@ -263,6 +295,8 @@ exports.fav = function(req, res) {
                       });
                   }else{
                       console.error('img not found!!');
+                      res.status(400);
+                      res.send({fav_result:'xxx'});
                   }
               });
 

@@ -5,34 +5,52 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
- 
-/**
-  * Validations
-  */
-/* var validatePresenceOf = function(value) {
-     // If you are authenticating by any of the oauth strategies, don't validate.
-     console.log('validatePresenceOf get called.....'+value);
-     return (this.provider && this.provider !== 'local') || (value && value.length);
- };*/
 
-/**
- * Category Schema
- */
-var User_Ablum = new Schema({
+var User_fav = new Schema({
     user_id: {
         type: String,
-        required: true,
+        required: true
     },
     image_id: {
         type: String,
-        required: true,
+        required: true
     },
     url: {
         type: String,
         required: true,
+    },
+    width: {
+        type: Number,
+        required: false,
+    },
+    height: {
+        type: Number,
+        required: false,
+    },
+    status: {
+        type: Number,
+        default:0
+    },
+    category_id: {
+        type: String,
+        required: false
+    },
+    /**所在相册ID
+     **/
+    ablum_id: {
+        type: String,
+        required: false
+    },
+    creator_id: {
+        type: String,
+        default: 'sysadmin',
+        required: true
+    },
+    create_time: {
+        type: String
     }
 });
 
  
 
-mongoose.model('user_fav', User_Ablum);
+mongoose.model('user_fav', User_fav);
