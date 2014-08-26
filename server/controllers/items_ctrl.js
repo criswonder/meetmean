@@ -134,7 +134,7 @@ exports.getAlbums = function(req, res) {
     if(ablum_id){
         console.log('ablum_id='+ablum_id);
         if(next){
-            AblumItem.findOne({'category_id':category_id,'_id':{$gte:ablum_id}},function(error, obj) {
+            AblumItem.findOne({'category_id':category_id,'_id':ablum_id},function(error, obj) {
                 if (error) {
                     console.log('category list have error');
                     return res.status(400);
@@ -148,32 +148,54 @@ exports.getAlbums = function(req, res) {
                             console.log('category list have error');
                             return res.status(400);
                         }
-//                        if(results && results.length>0){
-//                            for(int i=0;i<)
-//                        }
+                        var arrayResult = [];
+                        if(results && results.length>0){
+                            for(var i=0;i<results.length;i++){
+                                if(results[i]._id+''===ablum_id && i+1<results.length){
+                                    arrayResult.push(results[i+1]);
+                                    break;
+                                }
+                            }
+                        }
                         res.status(200).send({
-                            albums: results,
+                            albums: arrayResult,
                             itemCount: 1,
                             pageCount: 1
                         });
                     });
             });
         }else{
-            var query = AblumItem.find({'category_id':category_id,'_id':{$lte:ablum_id}},'_id category_id name')
-                .sort({create_time: -1})
-                .exec(function(error, results) {
-                    if (error) {
-                        console.log('category list have error');
-                        return res.status(400);
-                    }
-                    var array = [];
-                    array.push(results[results.length-1]);
-                    res.status(200).send({
-                        albums: array,
-                        itemCount: 1,
-                        pageCount: 1
+            AblumItem.findOne({'category_id':category_id,'_id':ablum_id},function(error, obj) {
+                if (error) {
+                    console.log('category list have error');
+                    return res.status(400);
+                }
+                var query = AblumItem.find({'category_id':category_id,'create_time':{$gte:obj.create_time}},
+                    'create_time name')
+                    .sort({create_time:-1,_id: -1})
+                    .exec(function(error, results) {
+                        if (error) {
+                            console.log('category list have error');
+                            return res.status(400);
+                        }
+                        var arrayResult = [];
+                        if(results && results.length>0){
+                            var len = results.length;
+                            for(var i=len-1;i>=0;i--){
+                                if(results[i]._id+''===ablum_id && i-1>=0){
+                                    arrayResult.push(results[i-1]);
+                                    break;
+                                }
+                            }
+                        }
+                        res.status(200).send({
+                            albums: arrayResult,
+                            itemCount: 1,
+                            pageCount: 1
+                        });
                     });
-                });
+            });
+
         }
 
     }else{
@@ -188,7 +210,7 @@ exports.getAlbums = function(req, res) {
                 itemCount:itemCount,
                 pageCount:pageCount
             });
-        },{ columns: 'name create_time',sortBy : { create_time : -1 }});
+        },{ columns: 'name create_time',sortBy : { create_time : -1,_id: -1 }});
     }
 };
 
