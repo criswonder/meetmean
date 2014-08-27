@@ -84,7 +84,7 @@ exports.list = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
     Category.find().exec( function(error, results){
         if (error){
-            console.log('category list have error');
+            console.log('category list have error-->'+error);
            return res.status(400); 
         } 
         // console.log(results);
@@ -105,7 +105,7 @@ exports.remove_ablum = function(req, res) {
     console.log('xxxxxxxxxxxxxxxxxxxx-----remove_ablum-------------------xxxxxxxxxxxxxxxxxxxx');
     AblumItem.remove({_id:id}).exec( function(error, results){
         if (error){
-            console.log('category list have error');
+            console.log('remove_ablum have error'+error);
            return res.status(400); 
         } 
         res.status(200);

@@ -107,7 +107,7 @@ exports.fulljson = function(req, res) {
 
     AblumItem.paginate({}, pageNum, 10, function(error, pageCount, paginatedResults, itemCount) {
        if (error){
-            console.log('category list have error');
+            console.log('fulljson have error:'+error);
            return res.status(400); 
         } 
         fulljson.albums = paginatedResults;
@@ -136,16 +136,16 @@ exports.getAlbums = function(req, res) {
         if(next){
             AblumItem.findOne({'category_id':category_id,'_id':ablum_id},function(error, obj) {
                 if (error) {
-                    console.log('category list have error');
+                    console.log('getAlbums when next findOne have error'+error);
                     return res.status(400);
                 }
-                var query = AblumItem.find({'category_id':category_id,'create_time':{$lte:obj.create_time}},
-                    'create_time name')
+                var query = AblumItem.find({'category_id':category_id,'create_time':{$lte:obj.create_time}})
+//                'create_time name')
                     .limit(10)
                     .sort({create_time:-1,_id: -1})
                     .exec(function(error, results) {
                         if (error) {
-                            console.log('category list have error');
+                            console.log('getAlbums have error2'+error);
                             return res.status(400);
                         }
                         var arrayResult = [];
@@ -167,15 +167,16 @@ exports.getAlbums = function(req, res) {
         }else{
             AblumItem.findOne({'category_id':category_id,'_id':ablum_id},function(error, obj) {
                 if (error) {
-                    console.log('category list have error');
+                    console.log('getAlbums previous have error'+error);
                     return res.status(400);
                 }
-                var query = AblumItem.find({'category_id':category_id,'create_time':{$gte:obj.create_time}},
-                    'create_time name')
+                var query = AblumItem.find({'category_id':category_id,'create_time':{$gte:obj.create_time}}
+                    )
+//                'create_time name')
                     .sort({create_time:-1,_id: -1})
                     .exec(function(error, results) {
                         if (error) {
-                            console.log('category list have error');
+                            console.log('getAlbums when previous findOne have error'+error);
                             return res.status(400);
                         }
                         var arrayResult = [];
@@ -200,17 +201,18 @@ exports.getAlbums = function(req, res) {
 
     }else{
         console.log('category_id='+category_id);
-        AblumItem.paginate({'category_id':category_id},pageNum, 100, function(error, pageCount, paginatedResults, itemCount) {
+        AblumItem.paginate({'category_id':category_id},pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
             if (error){
-                console.log('category list have error');
-                return res.status(400);
+                console.log('getAlbums have error:'+error);
+                return res.status(400).send();
             }
             res.status(200).send({
                 albums:paginatedResults,
                 itemCount:itemCount,
                 pageCount:pageCount
             });
-        },{ columns: 'name create_time',sortBy : { create_time : -1,_id: -1 }});
+        },{ sortBy : { create_time : -1,_id: -1 }});
+//    },{ columns: 'name create_time',sortBy : { create_time : -1,_id: -1 }});
     }
 };
 
@@ -221,7 +223,7 @@ exports.list = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
     AblumItem.find().exec( function(error, results){
         if (error){
-            console.log('category list have error');
+            console.log('!!deprecated list have error'+error);
            return res.status(400); 
         } 
         // console.log(results);
@@ -244,8 +246,8 @@ exports.get = function(req, res) {
     console.log(id);
     AblumItem.find({_id:id}).exec( function(error, results){
         if (error){
-            console.log('category list have error');
-           return res.status(400); 
+            console.log('get single ablum have error'+error);
+           return res.status(400);
         } 
         console.log(results);
         // for(var i=0;i<results.length;i++){
@@ -297,9 +299,9 @@ exports.fav = function(req, res) {
               console.log('fav find have error');
               return res.status(400);
           }
-          console.log(results);
+          console.log('userfav='+results);
           // var fav_result = false;
-          if(results && results.length>0){
+          if(results){
               // UserFav.find({user_id:u_id,ablum_id:a_id}).remove();
               UserFav.remove({user_id:u_id,image_id:img_id},function(error, count){});
               res.status(200);
@@ -310,7 +312,7 @@ exports.fav = function(req, res) {
               Images.findById(img_id,function(error,results){
                   console.log('2'+results);
                   if(results){
-                      item._id = results._id;
+                      item.image_id = results._id;
                       item.url = results.url;
                       item.width = results.width;
                       item.height = results.height;
@@ -319,12 +321,12 @@ exports.fav = function(req, res) {
                       item.category_id = results.category_id;
                       item.ablum_id = results.ablum_id;
                       item.creator_id = results.creator_id;
-                      item.create_time = results.create_time;
+                      item.create_time = new Date();
 
                       item.save(function(error,fav_result){
                           if (error){
-                              console.log('item.save have error');
-                              return res.status(400);
+                              console.log('item.save have error'+error);
+                              return res.status(400).send();
                           }
                           console.log('save result = '+fav_result);
                           res.status(200);

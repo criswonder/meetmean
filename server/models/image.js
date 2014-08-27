@@ -15,15 +15,15 @@ var mongoose = require('mongoose'),
 var ImageSchema = new Schema({
     url: {
         type: String,
-        required: true,
+        required: true
     },
     width: {
         type: Number,
-        required: false,
+        required: false
     },
     height: {
         type: Number,
-        required: false,
+        required: false
     },
     status: {
         type: Number,
@@ -39,6 +39,7 @@ var ImageSchema = new Schema({
         type: String,
         required: false
     },
+
     creator_id: {
         type: String,
         default: 'sysadmin',
