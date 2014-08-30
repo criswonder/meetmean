@@ -141,7 +141,7 @@ exports.getAlbums = function(req, res) {
                 }
                 var query = AblumItem.find({'category_id':category_id,'create_time':{$lte:obj.create_time}})
 //                'create_time name')
-                    .limit(10)
+                    .limit(100)
                     .sort({create_time:-1,_id: -1})
                     .exec(function(error, results) {
                         if (error) {
