@@ -65,19 +65,20 @@ function getUserFav(req,res){
     var user_id = req.query.user_id;
     if(user_id){
         console.log('user_id found!');
-        UserFav.find({'user_id':user_id}).exec( function(error, results){
-                if (error){
-                    console.log('getUserFav have error');
-                   return res.status(400); 
-                } 
-                
-                fulljson.user_fav = results;
-                
-                // res.status(200);
-                // res.send(fulljson);
-
-                getUserInfo(req,res,user_id);
-            });
+//        UserFav.find({'user_id':user_id}).exec( function(error, results){
+//                if (error){
+//                    console.log('getUserFav have error');
+//                   return res.status(400);
+//                }
+//
+//                fulljson.user_fav = results;
+//
+//                // res.status(200);
+//                // res.send(fulljson);
+//
+//
+//            });
+        getUserInfo(req,res,user_id);
     }else{
         console.log('no user_id found!');
         fulljson.user_fav = [];
@@ -105,14 +106,16 @@ exports.fulljson = function(req, res) {
     // console.log('xxxxxxxxxxxxxxxxxxxx------------------------xxxxxxxxxxxxxxxxxxxx');
     var pageNum = req.query.pageNum?req.query.pageNum:1;
 
-    AblumItem.paginate({}, pageNum, 10, function(error, pageCount, paginatedResults, itemCount) {
-       if (error){
-            console.log('fulljson have error:'+error);
-           return res.status(400); 
-        } 
-        fulljson.albums = paginatedResults;
-        getCategorys(req,res);
-    },{create_time: -1});
+//    AblumItem.paginate({}, pageNum, 10, function(error, pageCount, paginatedResults, itemCount) {
+//       if (error){
+//            console.log('fulljson have error:'+error);
+//           return res.status(400);
+//        }
+//        fulljson.albums = paginatedResults;
+//        getCategorys(req,res);
+//    },{create_time: -1});
+
+    getCategorys(req,res);
 
     // AblumItem.find().sort({create_time: -1}).exec( function(error, results){
     //     if (error){
