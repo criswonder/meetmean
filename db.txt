@@ -16,3 +16,21 @@ db.images.find({ablum_id:'53d624aa6fc07043241c25f1'})
 db.images.find({_id:ObjectId('53f5c175394f515109915337')});
 db.images.find({_id:'53f5c175394f515109915337'});
 db.images.find({_id:ObjectId('53f5c2af394f5151099155e5')});
+
+#复制数据库
+db.copyDatabase("mean-dev","mean-prod","localhost")
+#删除数据库
+use db2;
+db.dropDatabase();
+
+
+
+db.ablumitems.find({category_id:ObjectId('53a4385d6cc4cd870516b243')});
+db.ablumitems.find({category_id:'53a4385d6cc4cd870516b243'});
+
+db.ablumitems.find({category_id:'53a4385d6cc4cd870516b243'}).count();
+db.ablumitems.remove({category_id:'53a4385d6cc4cd870516b243'});
+
+#删除敏感数据
+db.ablumitems.remove({_id:ObjectId('53e8916827b1f262471973a6')});
+db.ablumitems.remove({_id:ObjectId('53e83c151153c27d33a52fc4')});

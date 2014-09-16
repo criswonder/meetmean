@@ -266,7 +266,7 @@ exports.get = function(req, res) {
 };
 exports.download = function(req, res) {
     if(req.query.version<1){
-        res.status(200).send({hasNewVersion:true,update_url:'http://106.187.99.142:3000/download.apk'});    
+        res.status(200).send({hasNewVersion:true,update_url:'http://www.365girlsclub.com/download.apk'});
     }else{
         res.status(200).send({hasNewVersion:false,update_url:''});    
     }
@@ -274,7 +274,7 @@ exports.download = function(req, res) {
 };
 exports.download_apk = function(req, res) {
  
-    res.download(__dirname+'/360MM.apk', '360MM.apk', function(err){
+    res.download(__dirname+'/girls_club.apk', 'girls_club.apk', function(err){
       if (err) {
         // handle error, keep in mind the response may be partially-sent
         // so check res.headersSent

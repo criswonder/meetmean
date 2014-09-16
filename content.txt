@@ -14,3 +14,8 @@ db.categories.update({"_id" : ObjectId("53a438496cc4cd870516b241")},{$set:{name:
 db.images.find({ablum_id:'53d624aa6fc07043241c25f1'})
 
 db.ablumitems.update({"_id" : ObjectId("53fc5663e3887c0d18341881")},{$set:{create_time:'Tue Aug 26 2014 17:42:08 GMT+0800 (CST)'}});
+
+
+export PORT=80
+export NODE_ENV=development
+export NODE_ENV=production
