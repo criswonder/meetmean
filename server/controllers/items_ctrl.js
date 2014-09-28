@@ -274,7 +274,7 @@ exports.download = function(req, res) {
 };
 exports.download_apk = function(req, res) {
  
-    res.download(__dirname+'/girls_club.apk', 'girls_club.apk', function(err){
+    res.download(__dirname+'/meinv_ruhua.apk', 'meinv_ruhua.apk', function(err){
       if (err) {
         // handle error, keep in mind the response may be partially-sent
         // so check res.headersSent

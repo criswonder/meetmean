@@ -34,3 +34,8 @@ db.ablumitems.remove({category_id:'53a4385d6cc4cd870516b243'});
 #删除敏感数据
 db.ablumitems.remove({_id:ObjectId('53e8916827b1f262471973a6')});
 db.ablumitems.remove({_id:ObjectId('53e83c151153c27d33a52fc4')});
+
+#更新数据库
+db.categories.update({"_id" : ObjectId("53a4385d6cc4cd870516b243")},{$set:{name:'素人美女'}});
+
+db.categories.update({"_id" : ObjectId("53a4384f6cc4cd870516b242")},{$set:{name:'豆蔻美女'}});
