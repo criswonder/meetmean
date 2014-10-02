@@ -116,7 +116,6 @@ exports.remove_ablum = function(req, res) {
 
 
 exports.create_ablum_item = function(req, res) {
-    console.log('xxxxxxxxxxxxxxxxxxxx------------444------------xxxxxxxxxxxxxxxxxxxx');
     var album = new AblumItem(req.body);
     // console.log(album);
     var semicolonIndex = album.urls.indexOf(';');
@@ -133,9 +132,9 @@ exports.create_ablum_item = function(req, res) {
     for( var index in imageUrls){
         oneImage = new ImageSchema();
         urlWithWH = imageUrls[index];
-        console.log(urlWithWH);
+//        console.log(urlWithWH);
         urlArgs =  urlWithWH.split('##');
-        console.log(urlArgs[0]+','+urlArgs[1]+','+urlArgs[2]);
+//        console.log(urlArgs[0]+','+urlArgs[1]+','+urlArgs[2]);
         oneImage.url= urlArgs[0];
         oneImage.width = urlArgs[1];
         oneImage.height = urlArgs[2];
@@ -159,38 +158,50 @@ exports.create_ablum_item = function(req, res) {
             console.log('AblumItem.remove({_id:album._id}) have error'+album._id);
             // return res.status(400);
         }
-        console.log('AblumItem.remove success '+album._id);
+        if(results && results.length>0){
+            console.log('AblumItem.remove by id success '+album._id +",results="+results);
+        }else{
+            console.log('AblumItem.remove by id failed ');
+        }
+
         // res.status(200);
         // res.send({});
     });
-    ImageSchema.remove({ablum_id:album.id}).exec( function(error, results){
+
+    AblumItem.find({name:album.name}).exec( function(error, results){
         if (error){
-            console.log('ImageSchema.remove({ablum_id:album._id}) has error'+album._id);
+            console.log(' AblumItem.remove by name  has error'+album.name);
             // return res.status(400);
         }
-        console.log('ImageSchema.remove success '+album._id);
+        if(results && results.length>0){
+            console.log('AblumItem.find by name success :'+album.name);
+            return res.status(400).send('该册子已经创建了');
+        }else{
+            console.log('will create album :'+album.name);
+            album.save(
+                function(err) {
+                    if (err) {
+                        console.log('err:'+err);
+                        switch (err.code) {
+                            case 11000:
+                            case 11001:
+                                return res.status(400).send('该册子已经创建了');
+                            default:
+                                return res.status(400).send('必填项没有哦');
+                        }
+
+                        return res.status(400);
+                    }else{
+                        return res.redirect(200,'albums');
+                    }
+
+                });
+        }
         // res.status(200);
         // res.send({});
     });
 
 
-    album.save(
-        function(err) {
-            if (err) {
-                console.log('err:'+err);
-                switch (err.code) {
-                    case 11000:
-                    case 11001:
-                        return res.status(400).send('该册子已经创建了');
-                    default:
-                        return res.status(400).send('必填项没有哦');
-                }
 
-                return res.status(400);
-            }else{
-                return res.redirect(200,'albums');    
-            }
-        
-    });
 };
 

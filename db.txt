@@ -23,6 +23,9 @@ db.copyDatabase("mean-dev","mean-prod","localhost")
 use db2;
 db.dropDatabase();
 
+#find
+db.ablumitems.find({name:'[秀人] 2014.07.18 NO.176 泰国旅拍合集'})
+
 
 
 db.ablumitems.find({category_id:ObjectId('53a4385d6cc4cd870516b243')});

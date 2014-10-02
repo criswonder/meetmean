@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
     UserFav = mongoose.model('user_fav');
 
 //var Q = require('q');
-var Promise = require('bluebird');
+//var Promise = require('bluebird');
 // var mongoosePages = require('mongoose-pages');
 // mongoosePages.anchor(AblumItem);
 
