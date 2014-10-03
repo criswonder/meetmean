@@ -25,6 +25,13 @@ db.dropDatabase();
 
 #find
 db.ablumitems.find({name:'[秀人] 2014.07.18 NO.176 泰国旅拍合集'})
+#返回指定的键projection
+db.ablumitems.find({name:'[Ugirls] 2014.02.18 NO.008 星妤'},{name:1,create_time:1})
+db.ablumitems.find({name:'[秀人] 2014.07.18 NO.176 泰国旅拍合集'},{name:1,create_time:1})
+
+
+
+db.ablumitems.find({name:'[Graphis] 2013.06.28 Gilrz High Special Gallery Part I'})
 
 
 
@@ -42,3 +49,15 @@ db.ablumitems.remove({_id:ObjectId('53e83c151153c27d33a52fc4')});
 db.categories.update({"_id" : ObjectId("53a4385d6cc4cd870516b243")},{$set:{name:'素人美女'}});
 
 db.categories.update({"_id" : ObjectId("53a4384f6cc4cd870516b242")},{$set:{name:'豆蔻美女'}});
+
+
+http://www.365girlsclub.com/albums_query?cid=53a4385d6cc4cd870516b243&ai=542cd03178f39f482c5b4d9d&next=1
+http://localhost:3000/albums_query?cid=53a4385d6cc4cd870516b243&ai=542cd03178f39f482c5b4d9d&next=1
+albums_query
+
+var d = new Date(Date.parse(s.replace(/-/g, "/")));
+dd.getTime()
+
+db.ablumitems.find({},{name:1,create_time:1})
+
+http://localhost:3000/albums_query?cid=53a4385d6cc4cd870516b243&pageNum=1&pageSize=100

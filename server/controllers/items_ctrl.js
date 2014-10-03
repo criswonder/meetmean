@@ -134,6 +134,22 @@ exports.getAlbums = function(req, res) {
     var next = req.query.next;
     var ablum_id = req.query.aid;
 
+    //下面的注释是修改ABLUM create_time 从String 到int 的转换
+//    AblumItem.find({},'create_time name',function(error,list){
+//        if(list && list.length>0){
+//            console.log(list);
+//            var oneItem;
+//            for(var i=0;i<list.length;i++){
+//                oneItem = list[i];
+//                var d = new Date(Date.parse(oneItem.create_time));
+//                AblumItem.update({_id:oneItem._id.toString()}, { $set: { create_time: d.getTime()+'' }},function(error,docs){
+//                    console.log(error);
+//                    console.log(docs);
+//                });
+//            }
+//        }
+//    });
+//    return;
     if(ablum_id){
         console.log('ablum_id='+ablum_id);
         if(next){
