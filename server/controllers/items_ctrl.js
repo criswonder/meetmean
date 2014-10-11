@@ -281,7 +281,7 @@ exports.get = function(req, res) {
     
 };
 exports.download = function(req, res) {
-    if(req.query.version<1){
+    if(req.query.version<=1){
         res.status(200).send({hasNewVersion:true,update_url:'http://www.365girlsclub.com/download.apk'});
     }else{
         res.status(200).send({hasNewVersion:false,update_url:''});    
