@@ -51,6 +51,13 @@ db.categories.update({"_id" : ObjectId("53a4385d6cc4cd870516b243")},{$set:{name:
 db.categories.update({"_id" : ObjectId("53a4384f6cc4cd870516b242")},{$set:{name:'豆蔻美女'}});
 
 
+db.ablumitems.update({"category_id" :'53a4385d6cc4cd870516b243'},{$set:{category_id:'53a4429e847b6200001c2202'}},false,true);
+db.ablumitems.find({category_id:'53a4385d6cc4cd870516b243'}).count();
+
+
+
+
+
 http://www.365girlsclub.com/albums_query?cid=53a4385d6cc4cd870516b243&ai=542cd03178f39f482c5b4d9d&next=1
 http://localhost:3000/albums_query?cid=53a4385d6cc4cd870516b243&ai=542cd03178f39f482c5b4d9d&next=1
 albums_query

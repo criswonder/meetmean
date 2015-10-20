@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     Category = mongoose.model('Category'),
     ImageSchema = mongoose.model('Image'),
+    DeviceItem = mongoose.model('Device'),
     AblumItem = mongoose.model('AblumItem');
 
  
@@ -113,6 +114,57 @@ exports.remove_ablum = function(req, res) {
     });
     
 };
+
+exports.create_device = function(req,res){
+    var device = new DeviceItem(req.body);
+    DeviceItem.find({IMEI:device.IMEI,SERIAL:device.SERIAL,MAC:device.MAC,SubscriberId:device.SubscriberId}).exec(
+        function(err,results){
+
+            if (results && results.length===1){
+                console.log('device already have');
+                return res.status(400).send();
+            }
+
+            device.save(function(err) {
+                if (err) {
+                    switch (err.code) {
+                        case 11000:
+                        case 11001:
+                            res.status(400).send('device already taken');
+                            break;
+                        default:
+                            res.status(400).send('Please fill all the required fields');
+                    }
+
+                    return res.status(400).send('create device have error!!!');
+                }
+//                res.render('categorys/create');
+                res.status(200).send('create success device='+device);
+            });
+        }
+    );
+}
+
+exports.list_device = function(req,res){
+//    var pageNum = req.query.pageNum?req.query.pageNum:1;
+//    var pageSize = req.query.pageSize?req.query.pageSize:10;
+    DeviceItem.find().exec( function(error, results){
+        if (error){
+            console.log('!!DeviceItem list have error'+error);
+            return res.status(400).send('!!DeviceItem list have error');
+        }
+        // console.log(results);
+        // for(var i=0;i<results.length;i++){
+        //     console.log(results[i]);
+        // }
+        res.status(200);
+        res.send({
+            result:results,
+            size:results.length
+        });
+        // res.render('categorys/list',{result:results});
+    });
+}
 
 
 exports.create_ablum_item = function(req, res) {

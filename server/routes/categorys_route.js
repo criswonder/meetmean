@@ -18,6 +18,10 @@ module.exports = function(app, passport) {
     app.route('/category/list').get(category.list);
     app.route('/category/list').post(category.create_ablum_item);
 
+    //curl -H "Content-Type: application/json" -d '{"IMEI":"xyz","MAC":"xyz","SERIAL":"ABDDD","SubscriberId":"xxxx"}' http://192.168.0.105:3000/device/list
+    app.route('/device/list').post(category.create_device);
+    app.route('/device/list').get(category.list_device);
+
     app.route('/albums').get(items_ctrl.list);
     app.route('/albums/remove').get(category.remove_ablum);
     app.route('/albums/:ablumId').get(items_ctrl.get);
