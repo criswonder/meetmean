@@ -40,4 +40,8 @@ var CategorySchema = new Schema({
         default: new Date()+''
     }
 });
+
+var mongoosePaginate = require('mongoose-paginate');
+CategorySchema.plugin(mongoosePaginate);
+
 mongoose.model('Device', CategorySchema);

@@ -153,6 +153,7 @@ exports.getAlbums = function(req, res) {
     if(ablum_id){
         console.log('ablum_id='+ablum_id);
         if(next){
+            //获取下一个相册
             AblumItem.findOne({'category_id':category_id,'_id':ablum_id},function(error, obj) {
                 if (error) {
                     console.log('getAlbums when next findOne have error'+error);
@@ -184,6 +185,7 @@ exports.getAlbums = function(req, res) {
                     });
             });
         }else{
+            //获取前一个相册
             AblumItem.findOne({'category_id':category_id,'_id':ablum_id},function(error, obj) {
                 if (error) {
                     console.log('getAlbums previous have error'+error);

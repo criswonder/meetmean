@@ -146,24 +146,19 @@ exports.create_device = function(req,res){
 }
 
 exports.list_device = function(req,res){
-//    var pageNum = req.query.pageNum?req.query.pageNum:1;
-//    var pageSize = req.query.pageSize?req.query.pageSize:10;
-    DeviceItem.find().exec( function(error, results){
+    var pageNum = req.query.pageNum?req.query.pageNum:1;
+    var pageSize = req.query.pageSize?req.query.pageSize:10;
+
+    DeviceItem.paginate({},pageNum, pageSize, function(error, pageCount, paginatedResults, itemCount) {
         if (error){
-            console.log('!!DeviceItem list have error'+error);
-            return res.status(400).send('!!DeviceItem list have error');
+            return res.status(400).send('list_device error occur');
         }
-        // console.log(results);
-        // for(var i=0;i<results.length;i++){
-        //     console.log(results[i]);
-        // }
-        res.status(200);
-        res.send({
-            result:results,
-            size:results.length
+        res.status(200).send({
+            results:paginatedResults,
+            itemCount:itemCount,
+            pageCount:pageCount
         });
-        // res.render('categorys/list',{result:results});
-    });
+    },{ sortBy : { create_time : -1,_id: -1 }});
 }
 
 
